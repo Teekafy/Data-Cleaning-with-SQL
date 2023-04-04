@@ -1,0 +1,129 @@
+-- Viewing the data
+
+select *
+from customer_demographics 
+order by customer_name;
+
+-- dropping columns that wouldn't be used for analysis
+alter table customer_demographics
+drop (address2, locality, driver_license);
+
+-- splitting customer_names to first and last names
+alter table customer_demographics
+add first_name varchar(30);
+
+alter table customer_demographics
+add last_name varchar(30);
+
+update customer_demographics
+set first_name = substr(customer_name, 1, instr(customer_name, ' ') -1) ;
+
+update customer_demographics
+set last_name = substr(customer_name, instr(customer_name, ' ') +1) ;
+
+alter table customer_demographics
+drop column customer_name;
+
+select * from customer_demographics
+order by first_name, last_name;
+
+-- trimming spaces in address and adding commas
+select trim(address1)
+from customer_demographics;
+
+update customer_demographics 
+set address1 = replace(address1, '  ', ' ');
+
+update customer_demographics 
+set address1 = (SUBSTR(address1, 1, INSTR(address1, ' ') - 1) || ', ' || SUBSTR(address1, INSTR(address1, ' ') + 1));
+
+-- changing country codes and nationality to coutry names for better data presentation and readability
+update customer_demographics
+set country_code = replace(country_code, 'AU', 'Australia');
+
+update customer_demographics
+set country_code = replace(country_code, 'CA', 'Canada');
+
+update customer_demographics
+set country_code = replace(country_code, 'DE', 'Germany');
+
+update customer_demographics
+set country_code = replace(country_code, 'ES', 'Spain');
+
+update customer_demographics
+set country_code = replace(country_code, 'FR', 'France');
+
+update customer_demographics
+set country_code = replace(country_code, 'IT', 'Italy');
+
+update customer_demographics
+set country_code = replace(country_code, 'US', 'USA');
+
+update customer_demographics
+set nationality = replace(nationality, 'CA', 'Canada');
+
+update customer_demographics
+set nationality = replace(nationality, 'ES', 'Spain');
+
+update customer_demographics
+set nationality = replace(nationality, 'FR', 'France');
+
+update customer_demographics
+set nationality = replace(nationality, 'IT', 'Italy');
+
+-- consistency of email_addresses, phone numbers and credit card types
+update customer_demographics
+set email_address = lower(email_address); 
+
+update customer_demographics
+set email_address = replace(email_address, '.', '');
+
+select trim (phone_number)
+from customer_demographics;
+
+update customer_demographics
+set phone_number = replace(phone_number, ' ', '-');
+
+update customer_demographics
+set phone_number = replace(phone_number, '.', '-');
+
+update customer_demographics
+set creditcard_type = replace(creditcard_type, 'jcb', 'JCB');
+
+-- checking for duplicates
+select count(distinct *)
+from customer_demographics;
+-- there are 194 distinct values
+
+-- deleting 6 duplicates
+delete from customer_demographics
+where rowid not in(
+  select min(rowid)
+  from customer_demographics
+  group by customer_id
+  );
+
+-- we need a primary key
+alter table customer_demographics
+add constraint cust_id_pk primary key (customer_id);
+
+-- the ages are not consistent
+update customer_demographics
+set age = replace(age, 'age-', '');
+
+-- standardize date formats
+update customer_demogrpahics
+SET customer_deographics = to_date(order_date, 'DD-MM-YYYY');
+
+--drop unused columns
+alter table customer_demographics
+drop (address2, postal_code_plus4);
+
+-- change column name
+alter table customer_demographics
+rename column address1 to address;
+
+--viewing the data
+select*  from customer_demographics
+order by customer_id;
+-----
