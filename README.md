@@ -7,6 +7,9 @@ In this project, we will focus on data cleaning using SQL. SQL is a powerful lan
 Our goal is to produce a clean and reliable dataset that can be used for analysis and decision-making.
 
 
+
+
+
 Side note: There were two or three columns in this dataset that wern't cleaned.
 
 Reason: The values were incorrectly typed in and they can't be manipulated, if I was cleaning this for an organization, I would have rectified them. Besides, they may not necessarily be used for analysis.
