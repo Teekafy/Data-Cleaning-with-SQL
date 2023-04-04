@@ -5,6 +5,7 @@ Data is an essential component of any organization, and its accuracy and complet
 In this project, we will focus on data cleaning using SQL. SQL is a powerful language for managing and querying data, and it offers a range of tools for data cleaning. We will use SQL queries to identify data quality issues, apply transformations to clean the data, and validate the results.
 
 Our goal is to produce a clean and reliable dataset that can be used for analysis and decision-making.
+![download](https://user-images.githubusercontent.com/107825654/229680915-655511b7-057c-4805-a4bc-49db16936303.png)
 
 -----------
 
